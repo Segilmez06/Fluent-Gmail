@@ -1,0 +1,78 @@
+/* Set background to transparent */
+.wl, .wq, .wp {
+    display: none;
+    opacity: 0;
+    background: transparent;
+}
+body {
+    background: transparent;
+}
+
+
+/* Login page mica effect */
+.S7xv8.LZgQXe {
+    background: transparent;
+}
+
+
+/* Smooth reveal effect */
+.smooth-reveal {
+    transition: 0.252s ease-in-out opacity;
+}
+
+.hidden-to-reveal {
+    opacity: 0;
+}
+
+
+/* Hide toolbar buttons to make use of WPF ones */
+div[role="button"][aria-label="Main menu"],
+a[role="button"][aria-label="Settings"],
+a[role="button"][aria-label*="Google"]:has(img) {
+    display: none;
+}
+
+
+/* Google Account Popup */
+div.gb_Cd.gb_Zd.gb_xd.gb_Kd > div:has(iframe[role="presentation"]) {
+    margin-top: 0;
+}
+
+
+/* Fix Gaps - Make in-WebView Gaps to 4px */
+.z0 {
+    /*Compose Button*/
+    padding-left: 4px;
+}
+.oy8Mbf.bhZ:not(.bym) .TO {
+    /*Left labels and icons*/
+    margin-left: 16px;
+}
+.bAw.it {
+    /*Right*/
+    max-width: 4px;
+    min-width: 4px;
+}
+div.nH aqk.aql.bkL:not(:has(div.oy8Mbf.bhZ)) > div.nH.bkK {
+    /*Main pane left space when left pane is open*/
+    margin-left: 12px;
+}
+.nH > .nH.bkK > .nH {
+    /*Bottom space*/
+    height: calc(100vh - 68px);
+}
+
+
+/* Hide internal Gmail logo */
+.gb_xd.gb_sd.gb_ud {
+    display: none;
+}
+.gb_xd.gb_Bd.gb_Je.gb_Ke.gb_Ee {
+    margin-left: 56px;
+}
+
+
+/* Search box */
+.ZF-Av {
+    left: 72px;
+}

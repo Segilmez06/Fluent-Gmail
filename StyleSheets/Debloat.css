@@ -1,0 +1,170 @@
+/* Expand Sidebar Button */
+div[aria-label*="ide panel"] {
+    display: none;
+}
+
+/* Gmail Logo */
+header#gb > div > div:has(div[aria-label="Main menu"]) {
+    /*justify-content: space-between;*/
+    justify-content: center;
+}
+
+/* Header Toolbar Help Button */
+div.zo[data-tooltip="Support"] {
+    display: none;
+}
+
+/* Header More Apps Button */
+.gb_3c {
+    display: none;
+}
+
+/* Main View Bottom Bar */
+.l2 {
+    display: flex;
+}
+
+/* Storage Quota Bar */
+div > div > div > div > a > div.aiC > div {
+    background: linear-gradient(to left, #50f, #80f);
+}
+
+div > div > div > div > a > div.aiG > div {
+    user-select: none;
+}
+
+.aeV {
+    width: 70%;
+}
+
+    .aeV > div {
+        height: 100%;
+    }
+
+    .aeV .ajd {
+        height: 100%;
+    }
+
+.aiF {
+    width: max-content;
+}
+
+.aeV a.bcB {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.aiC {
+    width: 150px;
+    margin-right: 12px;
+}
+
+.aiG > .aiz[role="img"] {
+    display: none;
+}
+
+/* Terms Services Button */
+.aeU {
+    width: 0;
+    display: none;
+}
+
+/* Last Account Activity Text */
+.ae3 {
+    width: 30%;
+}
+
+/* Compose Button */
+body > div > div.nH.a4O > div > div.nH.aqk.aql.bkL > div.aeN.WR.baA.nH.oy8Mbf > div.aic > div > div {
+    backdrop-filter: blur(20px);
+    background: #3339;
+    color: #fff;
+}
+
+    body > div > div.nH.a4O > div > div.nH.aqk.aql.bkL > div.aeN.WR.baA.nH.oy8Mbf > div.aic > div > div::before {
+        background-image: var(--compose-image);
+    }
+
+/* Collapsed Left Pane */
+div.aeN.WR.baA.nH.oy8Mbf.bhZ.bym {
+    background: #3339;
+    border-top-right-radius: 16px;
+    backdrop-filter: blur(5px);
+    box-sizing: border-box;
+}
+
+/* Background Noise */
+.bkK > div {
+    backdrop-filter: blur(20px);
+    background: #3339;
+}
+
+/* No new mail text */
+div.Nr > div > div > div > table > tbody > tr.TD > td.TC {
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+div.Nr > div > div > div > table > tbody > tr.TD {
+    background: transparent;
+    user-select: none;
+}
+
+div.Nr > div > div > div > table.TB {
+    border: transparent;
+}
+
+/* Account Activity Text */
+body > div > div.nH > div > div.nH > div.nH > div > div > div > div.AO > div > div.aeF > div > div > div > div > div > div.ae3 > div > div.l6 {
+    user-select: none;
+}
+
+/* Better Left Panel Label Text Font */
+a[aria-label*="▢"] {
+    font-weight: 400;
+}
+
+/* Left Panel More Functionality Buttons */
+div[aria-label="Create new label"],
+div.n6:has(span[aria-label="More labels"]) {
+    opacity: 0;
+}
+
+div.aeN.WR.baA.nH.oy8Mbf:not(.bhZ) div[aria-label="Create new label"],
+div.aeN.WR.baA.nH.oy8Mbf.bhZ.bym div[aria-label="Create new label"],
+div.aeN.WR.baA.nH.oy8Mbf:not(.bhZ) div.n6:has(span[aria-label="More labels"]),
+div.aeN.WR.baA.nH.oy8Mbf.bhZ.bym div.n6:has(span[aria-label="More labels"]) {
+    opacity: 1;
+}
+
+/* Left Panel Reduce Blank Size */
+div.aeN.WR.baA.nH.oy8Mbf.bhZ:not(.bym) div.aAw.FgKVne,
+div.aeN.WR.baA.nH.oy8Mbf.bhZ:not(.bym) div.n6:has(span[aria-label="More labels"]) {
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Left Panel Labels Section More Button*/
+.yJ:last-of-type div.n6:has(span.n4[aria-label="More labels"]) {
+    display: none;
+}
+
+/* On Screen Keyboard Button */
+div.aBS.J-J5-Ji {
+    display: none;
+}
+
+/* Left Panel Bottom Upgrade Button */
+.I6agWe {
+    display: none;
+}
+
+:root {
+    --compose-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Ctitle%3Epencil-plus-outline%3C/title%3E%3Cpath d="M14.1,9L15,9.9L5.9,19H5V18.1L14.1,9M17.7,3C17.5,3 17.2,3.1 17,3.3L15.2,5.1L18.9,8.9L20.7,7C21.1,6.6 21.1,6 20.7,5.6L18.4,3.3C18.2,3.1 17.9,3 17.7,3M14.1,6.2L3,17.2V21H6.8L17.8,9.9L14.1,6.2M7,2V5H10V7H7V10H5V7H2V5H5V2H7Z" fill="%23fff" /%3E%3C/svg%3E');
+}

@@ -1,0 +1,90 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>Resources\gmail.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Authors>Sarp Eren EGILMEZ</Authors>
+    <Title>Gmail on your desktop, with Fluent design and Mica material.</Title>
+    <PackageIcon>gmail.png</PackageIcon>
+    <Description>Fluent Gmail is a wrapper for Gmail that allows you to enhance your experience by introducing Microsoft's Fluent design to the app. The project matches your system's native look and feel, with utilizing mica material. Also transfers some functionality from page to native app.</Description>
+    <Copyright>Made with ❤️ by Segilmez06</Copyright>
+    <PackageProjectUrl>https://github.com/Segilmez06/Fluent-Gmail</PackageProjectUrl>
+    <Product>Fluent Gmail</Product>
+    <RepositoryUrl>https://github.com/Segilmez06/Fluent-Gmail</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>fluent;mica;gmail</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\sarpe\.nuget\packages\lottiesharp\2.4.2\contentFiles\any\net8.0-windows7.0\lottie_sharp.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Gmail-Animated.json" />
+    <None Remove="Resources\gmail.ico" />
+    <None Remove="Style.css" />
+    <None Remove="StyleSheets\Mica.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\gmail.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\gmail.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="LottieSharp" Version="2.4.2" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
+    <PackageReference Include="WPF-UI" Version="4.0.0" />
+    <PackageReference Include="WPF-UI.Tray" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Gmail-Animated.json" />
+    <Resource Include="Resources\gmail.ico" />
+    <EmbeddedResource Include="Resources\gmail.png" />
+    <EmbeddedResource Include="StyleSheets\Debloat.css" />
+    <EmbeddedResource Include="StyleSheets\Mica.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\gmail.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
