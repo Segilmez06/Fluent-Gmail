@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
 
     outputs:
-      release_tag: ${{ steps.project_version.outputs.tag }}
+      release_tag: ${{ steps.project_version.outputs.TAG }}
 
     steps:
       - name: Fetch source code
@@ -23,15 +23,15 @@ jobs:
         run: |
           [xml]$xml = Get-Content "Gmail.csproj"
           $assemblyVersion = $xml.Project.PropertyGroup.AssemblyVersion
-          "tag=$assemblyVersion" | Out-File -Append -Encoding utf8 $env:GITHUB_OUTPUT
+          Write-Output "TAG=$($assemblyVersion)" >> $Env:GITHUB_OUTPUT
 
       - name: Draft release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.project_version.outputs.tag }}
-          name: Fluent Gmail v${{ steps.project_version.outputs.tag }}
+          tag_name: ${{ steps.project_version.outputs.TAG }}
+          name: Fluent Gmail v${{ steps.project_version.outputs.TAG }}
           draft: true
           prerelease: false
           body_path: CHANGELOG.md
@@ -51,10 +51,10 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Publish
-        run: dotnet publish -c Release -r win-x64 -p:PublishProfile=win_amd64.pubxml Gmail.csproj
+        run: dotnet publish -c Release -r win-x64 -p:PublishProfile=release Gmail.csproj
 
-      - name: Zip output files
-        run: Compress-Archive -Path bin\Release\net9.0-windows7.0\win-x64\publish\ -DestinationPath ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
+      - name: Compress files
+        run: Compress-Archive -Path publish\ -DestinationPath ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
 
       - name: Upload artifact
         run: gh release upload ${{ needs.draft_release.outputs.release_tag }} ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
