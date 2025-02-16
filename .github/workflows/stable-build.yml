@@ -14,19 +14,13 @@ jobs:
       - name: Fetch source code
         uses: actions/checkout@v4
 
-      - name: Write Github Output
-        run: |
-            Write-Host $Env:GITHUB_OUTPUT
-            Write-Host $Env:GITHUB_ENV
-        
-
       - name: Read AssemblyVersion
         id: project_version
         shell: pwsh
         run: |
           [xml]$xml = Get-Content "Gmail.csproj"
           $assemblyVersion = $xml.Project.PropertyGroup.AssemblyVersion
-          echo "TAG=$($assemblyVersion)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "TAG=$($assemblyVersion)".Trim() | Out-File -Path $Env:GITHUB_OUTPUT
 
       - name: Draft release
         uses: softprops/action-gh-release@v2
