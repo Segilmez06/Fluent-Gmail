@@ -1,4 +1,4 @@
-name: Release Build
+name: Stable Build
 
 on:
   push:
@@ -6,12 +6,9 @@ on:
       - main
 
 jobs:
-  draft_release:
-    name: Create a new release draft
+  release:
+    name: Create a new release for Windows x64
     runs-on: windows-latest
-
-    outputs:
-      release_tag: ${{ steps.project_version.outputs.tag }}
 
     steps:
       - name: Fetch source code
@@ -23,46 +20,31 @@ jobs:
         run: |
           [xml]$xml = Get-Content "Gmail.csproj"
           $assemblyVersion = $xml.Project.PropertyGroup.AssemblyVersion
-          "tag=$assemblyVersion" | Out-File -Append -Encoding utf8 $env:GITHUB_OUTPUT
+          "TAG=$($assemblyVersion)".Trim() | Out-File -Path $Env:GITHUB_OUTPUT
 
       - name: Draft release
-        uses: softprops/action-gh-release@v1
-        id: draft
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.project_version.outputs.tag }}
-          name: Fluent Gmail v${{ steps.project_version.outputs.tag }}
+          tag_name: ${{ steps.project_version.outputs.TAG }}
+          name: Fluent Gmail v${{ steps.project_version.outputs.TAG }}
           draft: true
           prerelease: false
           body_path: CHANGELOG.md
 
-  build_amd64:
-    name: Build for Windows x64
-
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # Install the .NET Core workload
       - name: Install .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
 
-      # # Build the project
-      # - name: Build
-      #   run: dotnet build -c Release -a x64 Gmail.csproj
-
       - name: Publish
-        run: dotnet publish -c Release -r win-x64 -p:PublishProfile=Properties/PublishProfiles/win_amd64.pubxml -p:PublishTrimmed=true Gmail.csproj
+        run: dotnet publish -c Release -r win-x64 -p:PublishProfile=release Gmail.csproj
 
-      - name: Zip output files
-        run: Compress-Archive -Path bin\Release\net9.0-windows7.0\publish\ -DestinationPath ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
+      - name: Compress files
+        run: Compress-Archive -Path publish\ -DestinationPath ./Fluent-Gmail_v${{ steps.project_version.outputs.TAG }}.zip
 
       - name: Upload artifact
-        run: gh release upload ${{ needs.draft_release.outputs.release_tag }} ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
+        run: gh release upload ${{ steps.project_version.outputs.TAG }} ./Fluent-Gmail_v${{ steps.project_version.outputs.TAG }}.zip
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
