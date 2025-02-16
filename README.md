@@ -9,6 +9,9 @@ Downloads are not yet available. Once it's released, you can go to Releases page
 ## Installation
 Not released yet. Try to compile from source. You are on your own, good luck.
 
+## Screenshots
+Screenshots will the provided with first stable release. Hint: A native looking Gmail interface with Mica material in the back.
+
 ## Custom Styles
 You can inject custom styles into your Gmail instance. Create a `Custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
 
@@ -59,9 +62,6 @@ disable-system-context=true
 # Default: true
 devtools=true
 ```
-
-## Screenshots
-Screenshots will the provided with first stable release. Hint: A native looking Gmail interface with Mica material in the back.
 
 ## Roadmap
 - [x] Editable external CSS
