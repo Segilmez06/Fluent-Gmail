@@ -1,0 +1,11 @@
+div[role="button"][aria-label="Main menu"],
+a[role="button"][aria-label="Settings"],
+a[role="button"][aria-label*="Google"]:has(img) {
+    display: none;
+}
+
+header#gb > div > div:has(div[aria-label="Main menu"]) {
+    justify-content: flex-start;
+    min-width: 0;
+    padding-right: 0;
+}

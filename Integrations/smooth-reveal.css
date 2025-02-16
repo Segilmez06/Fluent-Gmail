@@ -1,0 +1,7 @@
+.smooth-reveal {
+    transition: 0.252s ease-in-out opacity;
+}
+
+.hidden-to-reveal {
+    opacity: 0;
+}

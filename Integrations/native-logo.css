@@ -1,0 +1,13 @@
+.gb_xd.gb_sd.gb_ud .gb_Cc {
+    display: none;
+}
+
+header#gb > div > div:has(div[aria-label="Main menu"]) {
+    justify-content: center;
+    min-width: 0;
+    padding-right: 0;
+}
+
+.gb_xd.gb_Bd.gb_Je.gb_Ke.gb_Ee {
+    margin-left: 56px;
+}
