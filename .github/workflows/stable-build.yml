@@ -26,8 +26,7 @@ jobs:
           "tag=$assemblyVersion" | Out-File -Append -Encoding utf8 $env:GITHUB_OUTPUT
 
       - name: Draft release
-        uses: softprops/action-gh-release@v1
-        id: draft
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
