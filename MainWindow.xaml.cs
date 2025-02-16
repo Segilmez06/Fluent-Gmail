@@ -41,7 +41,9 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         "native-controls",
         "native-logo",
         "smooth-reveal",
-        "wheel-window-state"
+        "wheel-window-state",
+        "disable-system-context",
+        "devtools"
         ];
 
     // List of enabled integrations
@@ -175,11 +177,11 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         #endregion
 
 
-        // TODO: FIX THIS
         #region Bind listeners
 
-        // Initialize Listener for F12 key
-        KeyUp += MainWindow_KeyUp;
+        // Initialize listener for F12 key
+        if (!IsIntegrationEnabled("devtools"))
+            WebView.CoreWebView2InitializationCompleted += AttachDevToolsManager;
 
 
         // Listen for profile image
@@ -199,10 +201,11 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         if (IsIntegrationEnabled("native-controls"))
             WebView.CoreWebView2InitializationCompleted += AttachHeaderButtonChecks;
 
-        // TODO: Disable MS-Edge default context menu
-        WebView.ContextMenuOpening += DisableBrowserContextMenu;
+        // Disable MS-Edge default context menu
+        if (IsIntegrationEnabled("disable-system-context"))
+            WebView.CoreWebView2InitializationCompleted += AttachContextMenuDisable; ;
 
-        // Lsiten for drag and double-click to maximize
+        // Listen for drag and double-click to maximize
         DraggableElement.MouseLeftButtonDown += DraggableElement_MouseLeftButtonDown;
 
         // Listen for drag while maximized
@@ -277,21 +280,17 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
 
     #region F12 DevTools
 
-    private void MainWindow_KeyUp(object sender, KeyEventArgs e)
+    private void AttachDevToolsManager(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
-        // If F12 key released
-        if (e.Key == Key.F12)
-        {
-            // Launch DevTools
-            WebView.CoreWebView2.OpenDevToolsWindow();
-        }
+        // Disable DevTools
+        WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
     }
 
     #endregion
 
 
     #region Header Buttons Visibility
-    
+
     private void AttachHeaderButtonChecks(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
         if (IsIntegrationEnabled("native-controls"))
@@ -334,12 +333,16 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
     #endregion
 
 
-    // TODO: FIX THIS
     #region Disable Context Menu
 
-    private void DisableBrowserContextMenu(object sender, ContextMenuEventArgs e)
+    private void AttachContextMenuDisable(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
-        e.Handled = true;
+        // When context menu requested
+        WebView.CoreWebView2.ContextMenuRequested += (s, e) =>
+        {
+            // Return true
+            e.Handled = true;
+        };
     }
 
     #endregion

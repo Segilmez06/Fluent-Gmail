@@ -2,7 +2,7 @@
 Gmail on your desktop, with Fluent design and Mica material.
 
 ## Roadmap
-- [ ] Editable external CSS
+- [x] Editable external CSS
 - [x] Make Mica integrations opt-outable (GUI or config file)
 - [ ] Edit ReadMe
 - [ ] Add screenshots
