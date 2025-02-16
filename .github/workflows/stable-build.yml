@@ -50,18 +50,11 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      # # Build the project
-      # - name: Build
-      #   run: dotnet build -c Release -a x64 Gmail.csproj
-
       - name: Publish
         run: dotnet publish -c Release -r win-x64 -p:PublishProfile=Properties/PublishProfiles/win_amd64.pubxml Gmail.csproj
 
-      - name: Get tree view
-        run: tree /F /A
-
       - name: Zip output files
-        run: Compress-Archive -Path bin\Release\net9.0-windows7.0\publish\ -DestinationPath ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
+        run: Compress-Archive -Path bin\Release\net9.0-windows7.0\win-x64\publish\ -DestinationPath ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
 
       - name: Upload artifact
         run: gh release upload ${{ needs.draft_release.outputs.release_tag }} ./Fluent-Gmail_v${{ needs.draft_release.outputs.release_tag }}.zip
