@@ -40,7 +40,7 @@
             <Grid Grid.Column="1" Name="DraggableElement" Background="Transparent">
                 <StackPanel Orientation="Horizontal">
                     <Image Name="HeaderIcon" Margin="0,8,0,8" RenderOptions.BitmapScalingMode="Fant"/>
-                    <TextBlock Text="Gmail" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="22" Foreground="White" RenderOptions.EdgeMode="Aliased" />
+                    <TextBlock Name="HeaderText" Text="Gmail" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="22" Foreground="White" RenderOptions.EdgeMode="Aliased" />
                 </StackPanel>
             </Grid>
 

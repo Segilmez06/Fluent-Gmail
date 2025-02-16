@@ -1,0 +1,9 @@
+﻿.wl, .wq, .wp {
+    display: none;
+    opacity: 0;
+    background: transparent;
+}
+
+body {
+    background: transparent;
+}

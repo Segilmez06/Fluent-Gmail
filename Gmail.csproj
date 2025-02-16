@@ -46,10 +46,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Integrations\fix-filter-box.css" />
+    <None Remove="Integrations\fix-gaps.css" />
+    <None Remove="Integrations\mica.css" />
+    <None Remove="Integrations\native-controls.css" />
+    <None Remove="Integrations\native-logo.css" />
+    <None Remove="Integrations\smooth-reveal.css" />
     <None Remove="Resources\Gmail-Animated.json" />
     <None Remove="Resources\gmail.ico" />
     <None Remove="Style.css" />
-    <None Remove="StyleSheets\Mica.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,6 +62,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Integrations\fix-account-popup.css" />
+    <EmbeddedResource Include="Integrations\fix-filter-box.css" />
+    <EmbeddedResource Include="Integrations\fix-gaps.css" />
+    <EmbeddedResource Include="Integrations\mica-login.css" />
+    <EmbeddedResource Include="Integrations\mica.css" />
+    <EmbeddedResource Include="Integrations\native-controls.css" />
+    <EmbeddedResource Include="Integrations\native-logo.css" />
+    <EmbeddedResource Include="Integrations\smooth-reveal.css" />
     <EmbeddedResource Include="Resources\gmail.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -77,11 +90,12 @@
     <Resource Include="Resources\Gmail-Animated.json" />
     <Resource Include="Resources\gmail.ico" />
     <EmbeddedResource Include="Resources\gmail.png" />
-    <EmbeddedResource Include="StyleSheets\Debloat.css" />
-    <EmbeddedResource Include="StyleSheets\Mica.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="FodyWeavers.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

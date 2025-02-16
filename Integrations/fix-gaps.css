@@ -1,0 +1,25 @@
+/*Compose Button*/
+.z0 {
+    padding-left: 4px;
+}
+
+/*Left labels and icons*/
+.oy8Mbf.bhZ:not(.bym) .TO {
+    margin-left: 16px;
+}
+
+/*Right*/
+.bAw.it {
+    max-width: 4px;
+    min-width: 4px;
+}
+
+/*Main pane left space when left pane is open*/
+div.nH aqk.aql.bkL:not(:has(div.oy8Mbf.bhZ)) > div.nH.bkK {
+    margin-left: 12px;
+}
+
+/*Bottom space*/
+.nH > .nH.bkK > .nH {
+    height: calc(100vh - 68px);
+}

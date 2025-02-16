@@ -1,0 +1,3 @@
+div.gb_Cd.gb_Zd.gb_xd.gb_Kd > div:has(iframe[role="presentation"]) {
+    margin-top: 0;
+}
