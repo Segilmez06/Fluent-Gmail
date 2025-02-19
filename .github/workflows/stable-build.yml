@@ -10,7 +10,7 @@ env:
 
 jobs:
   release:
-    name: Create a new release for Windows x64
+    name: Create a new release
     runs-on: windows-latest
 
     steps:
@@ -24,9 +24,9 @@ jobs:
           [xml]$xml = Get-Content $Env:PROJECT_FILE
 
           $version = "$($xml.Project.PropertyGroup.AssemblyVersion)".Trim()
-          $repo_name = "${{ github.event.repository.name }}"
+          $repo_name = "${{ github.event.repository.name }}".Replace('-', ' ').Trim()
           $release_name = "${repo_name} v${version}"
-          $archive_prefix = "./${repo_name}_v${version}_"
+          $archive_prefix = "./${{ github.event.repository.name }}_v${version}_"
 
           echo "TAG=$version" >> $env:GITHUB_ENV
           echo "VERSION=$version" >> $env:GITHUB_ENV
@@ -51,10 +51,10 @@ jobs:
       - name: Publish
         shell: pwsh
         run: |
-            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-standalone --self-contained true --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
-            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-framework --self-contained false --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
-            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-standalone --self-contained true --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
-            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-framework --self-contained false --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-standalone --self-contained true -p:PublishReadyToRun=true -p:PublishSingleFile=true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-framework --self-contained false -p:PublishReadyToRun=true -p:PublishSingleFile=true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-standalone --self-contained true -p:PublishReadyToRun=true -p:PublishSingleFile=true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-framework --self-contained false -p:PublishReadyToRun=true -p:PublishSingleFile=true
 
       - name: Compress files
         shell: pwsh
