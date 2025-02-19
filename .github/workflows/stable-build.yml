@@ -41,7 +41,6 @@ jobs:
           name: ${{ env.RELEASE }}
           draft: true
           prerelease: false
-          body_path: CHANGELOG.md
 
       - name: Install .NET Core
         uses: actions/setup-dotnet@v4
