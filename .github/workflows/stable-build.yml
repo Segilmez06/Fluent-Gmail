@@ -23,10 +23,11 @@ jobs:
         shell: pwsh
         run: |
           [xml]$xml = Get-Content $Env:PROJECT_FILE
+
           $version = "$($xml.Project.PropertyGroup.AssemblyVersion)".Trim()
           $repo_name = "${{ github.event.repository.name }}"
-          $release_name = "$(repo_name) v$(version)"
-          $file_name = "./$(repo_name)_v$(version).zip"
+          $release_name = "${repo_name} v${version}"
+          $file_name = "./${repo_name}_v${version}.zip"
 
           echo "TAG=$version" >> $env:GITHUB_ENV
           echo "VERSION=$version" >> $env:GITHUB_ENV
