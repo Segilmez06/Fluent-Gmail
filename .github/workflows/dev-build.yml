@@ -9,51 +9,91 @@ on:
       - dev
 
 jobs:
-  build_amd64:
-    name: Build for Windows AMD64
+  # build-win-x64:
+  #   name: Build for Windows x64
+
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Install .NET Core
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: 9.0.x
+
+  #     - name: Build
+  #       run: dotnet build -c Release -a x64 Gmail.csproj
+
+  #     - name: Upload build artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: Windows x64 Development Build
+  #         path: bin/Release/
+
+  # build-win-arm64:
+  #   name: Build for Windows Arm64
+
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Install .NET Core
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: 9.0.x
+
+  #     - name: Build
+  #       run: dotnet build -c Release -a arm64 Gmail.csproj
+
+  #     - name: Upload build artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: Windows Arm64 Development Build
+  #         path: bin/Release/
+
+  build:
+    name: Build for Windows
 
     runs-on: windows-latest
 
     steps:
+
+      # Fetch the source code
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Setup .Net
       - name: Install .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
 
-      - name: Build
+      # Build for x64
+      - name: Build for x64
         run: dotnet build -c Release -a x64 Gmail.csproj
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Windows AMD64 Development Build
-          path: bin/Release/
-
-  build_arm64:
-    name: Build for Windows ARM64
-
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # Install the .NET Core workload
-      - name: Install .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.0.x
-
-      # Build the project
-      - name: Build
+      # Build for Arm64
+      - name: Build for Arm64
         run: dotnet build -c Release -a arm64 Gmail.csproj
 
-      # Upload output binaries
-      - name: Upload build artifacts
+      - shell: pwsh
+        run: |
+            tree
+
+      # Upload x64
+      - name: Upload x64 artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Windows ARM64 Development Build
+          name: Windows x64 Development Build
+          path: bin/Release/
+
+      # Upload Arm64
+      - name: Upload Arm64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows Arm64 Development Build
           path: bin/Release/
