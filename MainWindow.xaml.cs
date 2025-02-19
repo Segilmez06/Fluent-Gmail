@@ -62,7 +62,7 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
     readonly string ConfigPath = "config.ini";
 
     // Custom CSS file relative path from working directory
-    readonly string CustomCSSPath = "Custom.css";
+    readonly string CustomCSSPath = "custom.css";
 
 
     // Config file raw data

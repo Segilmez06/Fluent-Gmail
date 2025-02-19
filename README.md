@@ -4,16 +4,33 @@ Fluent Gmail is a wrapper written in WPF for Gmail that allows you to enhance yo
 Each feature in the project is called an integration. Integrations can fix styling and create or move functionality. Most of them are opt-out with a config file.
 
 ## Downloading
-Downloads are not yet available. Once it's released, you can go to Releases page or get latest Actions build.
+Get your latest version from [Releases](https://github.com/Segilmez06/Fluent-Gmail/releases/latest) page. Arm64 and x64 supported.
+
+For most users, Windows x64 Standalone would work fine. Look the table below to chose which one to use:
+| Type       | Description |
+| :--------- | :---------- |
+| Standalone | All in one package. Contains it's own runtime. Ready to use but bigger file size. |
+| Framework  | Requires [.Net Core 9.0.x](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) to be installed. Much less file size. Prefer this if you already have .Net Core installed. |
+
+### Note on x86 Builds
+I decided not to release x86 builds for this project due to the smaller user base and the architecture being mostly outdated. It can still be compiled from source if needed. If you are interested in an x86 release, please open an issue.
 
 ## Installation
-Not released yet. Try to compile from source. You are on your own, good luck.
+No installation required. Just download and extract the archive, then run it.
 
 ## Screenshots
-Screenshots will the provided with first stable release. Hint: A native looking Gmail interface with Mica material in the back.
+
+### Here is default state with default config file and no custom stylesheet:
+![Login page](assets/Login.png)
+![Inbox page](assets/Inbox.png)
+
+### With some styling, you can get cleaner results like this:
+![Custom style](assets/Custom.png)
+
+With even more tweaking, you can transform this view to really native looking experience.
 
 ## Custom Styles
-You can inject custom styles into your Gmail instance. Create a `Custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
+You can inject custom styles into your Gmail instance. Create a `custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
 
 ## Configuring
 Create a `config.ini` file inside installation location / working directory. Here is a template config file with all available options to start with:
@@ -63,18 +80,9 @@ disable-system-context=true
 devtools=true
 ```
 
-## Roadmap
-- [x] Editable external CSS
-- [x] Make Mica integrations opt-outable (GUI or config file)
-- [x] Edit ReadMe
-- [ ] Add screenshots
-- [ ] Add CI/CD (Development workflow done)
-- [ ] Create packaging workflow
-- [ ] Implement smooth reveal
-- [ ] Release
-- [ ] Make external styles opt-out with config file
-
 ## Contributing and Support
+
+For more integration (built-in style and functionality) ideas, just create a feature request.
 
 Any PR and issue is really appreciated. You can show your support by ⭐ starring the repo.
 
