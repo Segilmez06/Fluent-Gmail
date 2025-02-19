@@ -7,7 +7,6 @@ on:
 
 env:
   PROJECT_FILE: Gmail.csproj
-  # PROJECT_NAME: ${{ github.event.repository.name }}
 
 jobs:
   release:
@@ -15,11 +14,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
+
       - name: Fetch source code
         uses: actions/checkout@v4
 
       - name: Generate environment variables
-        # id: project_version
         shell: pwsh
         run: |
           [xml]$xml = Get-Content $Env:PROJECT_FILE
@@ -35,15 +34,9 @@ jobs:
           echo "RELEASE=$release_name" >> $env:GITHUB_ENV
           echo "FILENAME=$file_name" >> $env:GITHUB_ENV
 
-          # "TAG=$assemblyVersion".Trim() | Out-File -Path $Env:GITHUB_OUTPUT
-
       - name: Draft release
         uses: softprops/action-gh-release@v2
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # tag_name: ${{ steps.project_version.outputs.TAG }}
-          # name: ${{ env.PREFIX }} v${{ steps.project_version.outputs.TAG }}
           tag_name: ${{ env.TAG }}
           name: ${{ env.RELEASE }}
           draft: true
@@ -55,22 +48,13 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      # - name: Publish
-      #   run: dotnet publish -c Release -r win-x64 -p:PublishProfile=release Gmail.csproj
-
       - name: Publish
         run: dotnet publish -c Release -r win-x64 -o publish\win-x64 -p:PublishSingleFile=true $Env:PROJECT_FILE
-
-      # - name: Compress files
-      #   run: Compress-Archive -Path publish\ -DestinationPath ./$($Env:PROJECT_NAME)_v${{ steps.project_version.outputs.TAG }}.zip
 
       - name: Compress files
         run: Compress-Archive -Path publish\win-x64 -DestinationPath ${{ env.FILENAME }}
 
-      # - name: Upload artifact
-      #   run: gh release upload ${{ steps.project_version.outputs.TAG }} ./$($Env:PROJECT_NAME)_v${{ steps.project_version.outputs.TAG }}.zip
-      #   # env:
-      #   #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload artifact
         run: gh release upload ${{ env.TAG }} ${{ env.FILENAME }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
