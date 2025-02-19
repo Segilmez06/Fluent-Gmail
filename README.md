@@ -68,7 +68,7 @@ devtools=true
 - [x] Make Mica integrations opt-outable (GUI or config file)
 - [x] Edit ReadMe
 - [ ] Add screenshots
-- [ ] Add CI/CD
+- [ ] Add CI/CD (Development workflow done)
 - [ ] Create packaging workflow
 - [ ] Implement smooth reveal
 - [ ] Release
