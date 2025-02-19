@@ -18,6 +18,9 @@ I decided not to release x86 builds for this project due to the smaller user bas
 ## Installation
 No installation required. Just download and extract the archive, then run it.
 
+## Configuring
+TODO: Inset link to wiki page.
+
 ## Screenshots
 
 ### Here is default state with default config file and no custom stylesheet:
@@ -31,54 +34,6 @@ With even more tweaking, you can transform this view to really native looking ex
 
 ## Custom Styles
 You can inject custom styles into your Gmail instance. Create a `custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
-
-## Configuring
-Create a `config.ini` file inside installation location / working directory. Here is a template config file with all available options to start with:
-```ini
-# Moves account popup to top of the page
-# Default: true
-fix-account-popup=true
-
-# Aligns filter box with search box
-# Default: true
-fix-filter-box=true
-
-# Sets all internal (in-browser) gaps to 4
-# Default: true
-fix-gaps=true
-
-# Enables mica
-# Default: true
-mica=true
-
-# Enabled mica on login screen
-# Default: true
-mica-login=true
-
-# Moves header button to native title bar
-# Default: true
-native-controls=true
-
-# Shows Gmail branding logo on native title bar
-# Default: true
-native-logo=true
-
-# WIP - smoothly reveals window contents after loading finished
-# Default: true
-smooth-reveal=true
-
-# Mouse scrol on titlebar to maximize, normalize and minimize
-# Default: true
-wheel-window-state=true
-
-# Disable MS Edge context menu
-# Default: true
-disable-system-context=true
-
-# Enable F12 DevTools
-# Default: true
-devtools=true
-```
 
 ## Contributing and Support
 

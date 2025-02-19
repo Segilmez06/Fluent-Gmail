@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - dev
+    paths-ignore:
+      - README.md
+      - assets/**
   pull_request:
     branches:
       - dev
+    paths-ignore:
+      - README.md
+      - assets/**
 
 env:
   PROJECT_FILE: Gmail.csproj
