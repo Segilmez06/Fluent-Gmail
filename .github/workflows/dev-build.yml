@@ -26,11 +26,11 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Build for x64
-        run: dotnet build -c Release -a x64 $Env:PROJECT_FILE
-
-      - name: Build for Arm64
-        run: dotnet build -c Release -a arm64 $Env:PROJECT_FILE
+      - name: Build
+        shell: pwsh
+        run: |
+            dotnet build -c Release -a x64 $Env:PROJECT_FILE
+            dotnet build -c Release -a arm64 $Env:PROJECT_FILE
 
       - name: Upload x64 artifacts
         uses: actions/upload-artifact@v4
