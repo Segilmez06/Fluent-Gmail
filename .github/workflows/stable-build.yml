@@ -26,13 +26,13 @@ jobs:
           $version = "$($xml.Project.PropertyGroup.AssemblyVersion)".Trim()
           $repo_name = "${{ github.event.repository.name }}"
           $release_name = "${repo_name} v${version}"
-          $file_name = "./${repo_name}_v${version}.zip"
+          $archive_prefix = "./${repo_name}_v${version}_"
 
           echo "TAG=$version" >> $env:GITHUB_ENV
           echo "VERSION=$version" >> $env:GITHUB_ENV
           echo "REPO=$repo_name" >> $env:GITHUB_ENV
           echo "RELEASE=$release_name" >> $env:GITHUB_ENV
-          echo "FILENAME=$file_name" >> $env:GITHUB_ENV
+          echo "PREFIX=$archive_prefix" >> $env:GITHUB_ENV
 
       - name: Draft release
         uses: softprops/action-gh-release@v2
@@ -49,12 +49,22 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Publish
-        run: dotnet publish -c Release -r win-x64 -o publish\win-x64 -p:PublishSingleFile=true $Env:PROJECT_FILE
+        shell: pwsh
+        run: |
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-standalone --self-contained true --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-framework --self-contained false --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-standalone --self-contained true --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-framework --self-contained false --framework net9.0-windows7.0 --publish-single-file true --publish-ready-to-run true
 
       - name: Compress files
-        run: Compress-Archive -Path publish\win-x64 -DestinationPath ${{ env.FILENAME }}
+        shell: pwsh
+        run: |
+            Compress-Archive -Path publish\win-x64-standalone -DestinationPath ${{ env.PREFIX }}win-x64-standalone.zip
+            Compress-Archive -Path publish\win-x64-framework -DestinationPath ${{ env.PREFIX }}win-x64-framework.zip
+            Compress-Archive -Path publish\win-arm64-standalone -DestinationPath ${{ env.PREFIX }}win-arm64-standalone.zip
+            Compress-Archive -Path publish\win-arm64-framework -DestinationPath ${{ env.PREFIX }}win-arm64-framework.zip
 
-      - name: Upload artifact
-        run: gh release upload ${{ env.TAG }} ${{ env.FILENAME }}
+      - name: Upload release archives
+        run: gh release upload ${{ env.TAG }} ${{ env.PREFIX }}win-x64-standalone.zip ${{ env.PREFIX }}win-x64-framework.zip ${{ env.PREFIX }}win-arm64-standalone.zip ${{ env.PREFIX }}win-arm64-framework.zip
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
