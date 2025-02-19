@@ -9,52 +9,6 @@ on:
       - dev
 
 jobs:
-  # build-win-x64:
-  #   name: Build for Windows x64
-
-  #   runs-on: windows-latest
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-
-  #     - name: Install .NET Core
-  #       uses: actions/setup-dotnet@v4
-  #       with:
-  #         dotnet-version: 9.0.x
-
-  #     - name: Build
-  #       run: dotnet build -c Release -a x64 Gmail.csproj
-
-  #     - name: Upload build artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: Windows x64 Development Build
-  #         path: bin/Release/
-
-  # build-win-arm64:
-  #   name: Build for Windows Arm64
-
-  #   runs-on: windows-latest
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-
-  #     - name: Install .NET Core
-  #       uses: actions/setup-dotnet@v4
-  #       with:
-  #         dotnet-version: 9.0.x
-
-  #     - name: Build
-  #       run: dotnet build -c Release -a arm64 Gmail.csproj
-
-  #     - name: Upload build artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: Windows Arm64 Development Build
-  #         path: bin/Release/
-
   build:
     name: Build for Windows
 
@@ -80,20 +34,16 @@ jobs:
       - name: Build for Arm64
         run: dotnet build -c Release -a arm64 Gmail.csproj
 
-      - shell: pwsh
-        run: |
-            tree
-
       # Upload x64
       - name: Upload x64 artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Windows x64 Development Build
-          path: bin/Release/
+          path: bin/Release/net9.0-windows7.0/win-x64
 
       # Upload Arm64
       - name: Upload Arm64 artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Windows Arm64 Development Build
-          path: bin/Release/
+          path: bin/Release/net9.0-windows7.0/win-arm64
