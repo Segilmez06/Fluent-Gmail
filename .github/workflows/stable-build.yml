@@ -20,7 +20,7 @@ jobs:
         run: |
           [xml]$xml = Get-Content "Gmail.csproj"
           $assemblyVersion = $xml.Project.PropertyGroup.AssemblyVersion
-          "TAG=$($assemblyVersion)".Trim() | Out-File -Path $Env:GITHUB_OUTPUT
+          "TAG=$(assemblyVersion)".Trim() | Out-File -Path $Env:GITHUB_OUTPUT
 
       - name: Draft release
         uses: softprops/action-gh-release@v2
@@ -38,8 +38,11 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
+      # - name: Publish
+      #   run: dotnet publish -c Release -r win-x64 -p:PublishProfile=release Gmail.csproj
+
       - name: Publish
-        run: dotnet publish -c Release -r win-x64 -p:PublishProfile=release Gmail.csproj
+        run: dotnet publish -c Release -r win-x64 -o publish\win-x64 -p:PublishSingleFile=true Gmail.csproj
 
       - name: Compress files
         run: Compress-Archive -Path publish\ -DestinationPath ./Fluent-Gmail_v${{ steps.project_version.outputs.TAG }}.zip
