@@ -7,69 +7,63 @@ on:
 
 env:
   PROJECT_FILE: Gmail.csproj
-  # PROJECT_NAME: ${{ github.event.repository.name }}
 
 jobs:
   release:
-    name: Create a new release for Windows x64
+    name: Create a new release
     runs-on: windows-latest
 
     steps:
+
       - name: Fetch source code
         uses: actions/checkout@v4
 
       - name: Generate environment variables
-        # id: project_version
         shell: pwsh
         run: |
           [xml]$xml = Get-Content $Env:PROJECT_FILE
+
           $version = "$($xml.Project.PropertyGroup.AssemblyVersion)".Trim()
-          $repo_name = "${{ github.event.repository.name }}"
-          $release_name = "$(repo_name) v$(version)"
-          $file_name = "./$(repo_name)_v$(version).zip"
+          $repo_name = "${{ github.event.repository.name }}".Replace('-', ' ').Trim()
+          $release_name = "${repo_name} v${version}"
+          $archive_prefix = "./${{ github.event.repository.name }}_v${version}_"
 
           echo "TAG=$version" >> $env:GITHUB_ENV
           echo "VERSION=$version" >> $env:GITHUB_ENV
           echo "REPO=$repo_name" >> $env:GITHUB_ENV
           echo "RELEASE=$release_name" >> $env:GITHUB_ENV
-          echo "FILENAME=$file_name" >> $env:GITHUB_ENV
-
-          # "TAG=$assemblyVersion".Trim() | Out-File -Path $Env:GITHUB_OUTPUT
+          echo "PREFIX=$archive_prefix" >> $env:GITHUB_ENV
 
       - name: Draft release
         uses: softprops/action-gh-release@v2
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # tag_name: ${{ steps.project_version.outputs.TAG }}
-          # name: ${{ env.PREFIX }} v${{ steps.project_version.outputs.TAG }}
           tag_name: ${{ env.TAG }}
           name: ${{ env.RELEASE }}
           draft: true
           prerelease: false
-          body_path: CHANGELOG.md
 
       - name: Install .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
 
-      # - name: Publish
-      #   run: dotnet publish -c Release -r win-x64 -p:PublishProfile=release Gmail.csproj
-
       - name: Publish
-        run: dotnet publish -c Release -r win-x64 -o publish\win-x64 -p:PublishSingleFile=true $Env:PROJECT_FILE
-
-      # - name: Compress files
-      #   run: Compress-Archive -Path publish\ -DestinationPath ./$($Env:PROJECT_NAME)_v${{ steps.project_version.outputs.TAG }}.zip
+        shell: pwsh
+        run: |
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-standalone --self-contained true -p:PublishReadyToRun=true -p:PublishSingleFile=true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-x64 --output publish\win-x64-framework --self-contained false -p:PublishReadyToRun=true -p:PublishSingleFile=true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-standalone --self-contained true -p:PublishReadyToRun=true -p:PublishSingleFile=true
+            dotnet publish $Env:PROJECT_FILE -c Release -r win-arm64 --output publish\win-arm64-framework --self-contained false -p:PublishReadyToRun=true -p:PublishSingleFile=true
 
       - name: Compress files
-        run: Compress-Archive -Path publish\win-x64 -DestinationPath ${{ env.FILENAME }}
+        shell: pwsh
+        run: |
+            Compress-Archive -Path publish\win-x64-standalone -DestinationPath ${{ env.PREFIX }}win-x64-standalone.zip
+            Compress-Archive -Path publish\win-x64-framework -DestinationPath ${{ env.PREFIX }}win-x64-framework.zip
+            Compress-Archive -Path publish\win-arm64-standalone -DestinationPath ${{ env.PREFIX }}win-arm64-standalone.zip
+            Compress-Archive -Path publish\win-arm64-framework -DestinationPath ${{ env.PREFIX }}win-arm64-framework.zip
 
-      # - name: Upload artifact
-      #   run: gh release upload ${{ steps.project_version.outputs.TAG }} ./$($Env:PROJECT_NAME)_v${{ steps.project_version.outputs.TAG }}.zip
-      #   # env:
-      #   #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact
-        run: gh release upload ${{ env.TAG }} ${{ env.FILENAME }}
+      - name: Upload release archives
+        run: gh release upload ${{ env.TAG }} ${{ env.PREFIX }}win-x64-standalone.zip ${{ env.PREFIX }}win-x64-framework.zip ${{ env.PREFIX }}win-arm64-standalone.zip ${{ env.PREFIX }}win-arm64-framework.zip
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
