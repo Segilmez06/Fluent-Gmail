@@ -4,16 +4,17 @@ Fluent Gmail is a wrapper written in WPF for Gmail that allows you to enhance yo
 Each feature in the project is called an integration. Integrations can fix styling and create or move functionality. Most of them are opt-out with a config file.
 
 ## Downloading
-Get your latest version from [Releases](https://github.com/Segilmez06/Fluent-Gmail/releases/latest) page. Arm64 and x64 supported.
+Get your latest build from [Releases](https://github.com/Segilmez06/Fluent-Gmail/releases/latest) page. Arm64 and x64 supported.
 
-For most users, Windows x64 Standalone would work fine. Look the table below to chose which one to use:
+For most users, Windows x64 Standalone would work fine. See the table below to chose which one to use:
 | Type       | Description |
 | :--------- | :---------- |
-| Standalone | All in one package. Contains it's own runtime. Ready to use but bigger file size. |
-| Framework  | Requires [.Net Core 9.0.x](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) to be installed. Much less file size. Prefer this if you already have .Net Core installed. |
+| Standalone | All in one package. Contains it's own runtime.<br>Ready to use but bigger file size. |
+| Framework  | Requires [.Net Core 9.0.x](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) to be installed. Much less file size.<br>Prefer this if you already have .Net Core installed. |
 
-### Note on x86 Builds
-I decided not to release x86 builds for this project due to the smaller user base and the architecture being mostly outdated. It can still be compiled from source if needed. If you are interested in an x86 release, please open an issue.
+> [!IMPORTANT]
+> I decided not to release x86 builds for this project due to the smaller user base and the architecture being mostly outdated.
+> It can still be compiled from source if needed. If you are interested in an x86 builds, please create an issue.
 
 ## Installation
 No installation required. Just download and extract the archive, then run it.
@@ -23,11 +24,22 @@ See [Wiki/Configuration](https://github.com/Segilmez06/Fluent-Gmail/wiki/Configu
 
 ## Screenshots
 
-### Here is default state with default config file and no custom stylesheet:
-![Login page](assets/Login.png)
-![Inbox page](assets/Inbox.png)
+#### Default config with no external CSS:
 
-### With some styling, you can get cleaner results like this:
+<details>
+  <summary>Login page</summary>
+
+  ![Login page](assets/Login.png)
+
+</details>
+<details>
+  <summary>Inbox</summary>
+
+  ![Inbox page](assets/Inbox.png)
+
+</details>
+
+#### With some styling, you can get cleaner results like this:
 ![Custom style](assets/Custom.png)
 
 With even more tweaking, you can transform this view to really native looking experience.
