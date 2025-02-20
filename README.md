@@ -19,7 +19,7 @@ I decided not to release x86 builds for this project due to the smaller user bas
 No installation required. Just download and extract the archive, then run it.
 
 ## Configuring
-TODO: Inset link to wiki page.
+See [Wiki/Configuration](https://github.com/Segilmez06/Fluent-Gmail/wiki/Configuration) page.
 
 ## Screenshots
 
