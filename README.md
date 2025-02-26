@@ -19,8 +19,8 @@ For most users, Windows x64 Standalone would work fine. See the table below to c
 ## Installation
 No installation required. Just download and extract the archive, then run it.
 
-## Configuring
-See [Wiki/Configuration](https://github.com/Segilmez06/Fluent-Gmail/wiki/Configuration) page.
+## Command Line Arguments
+See [Wiki/Command Line Arguments](https://github.com/Segilmez06/Fluent-Gmail/wiki/Command-Line-Arguments) page.
 
 ## Screenshots
 
