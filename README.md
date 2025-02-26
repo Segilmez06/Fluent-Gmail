@@ -19,9 +19,6 @@ For most users, Windows x64 Standalone would work fine. See the table below to c
 ## Installation
 No installation required. Just download and extract the archive, then run it.
 
-## Command Line Arguments
-See [Wiki/Command Line Arguments](https://github.com/Segilmez06/Fluent-Gmail/wiki/Command-Line-Arguments) page.
-
 ## Screenshots
 
 #### Default config with no external CSS:
@@ -43,6 +40,9 @@ See [Wiki/Command Line Arguments](https://github.com/Segilmez06/Fluent-Gmail/wik
 ![Custom style](assets/Custom.png)
 
 With even more tweaking, you can transform this view to really native looking experience.
+
+## Command Line Arguments
+See [Wiki/Command Line Arguments](https://github.com/Segilmez06/Fluent-Gmail/wiki/Command-Line-Arguments) page.
 
 ## Custom Styles
 You can inject custom styles into your Gmail instance. Create a `custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
