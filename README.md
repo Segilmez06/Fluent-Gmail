@@ -13,11 +13,11 @@ For most users, Windows x64 Standalone would work fine. See the table below to c
 | Framework  | Requires [.Net Core 9.0.x](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) to be installed. Much less file size.<br>Prefer this if you already have .Net Core installed. |
 
 > [!IMPORTANT]
-> I decided not to release x86 builds for this project due to the smaller user base and the architecture being mostly outdated.
+> I won't release x86 builds for this project due to the smaller user base and the architecture being mostly outdated.
 > It can still be compiled from source if needed. If you are interested in an x86 builds, please create an issue.
 
 ## Installation
-No installation required. Just download and extract the archive, then run it.
+No installation required. Just make sure to install dependencies if required ([see table above](#downloading)). Download and extract the archive, then run it.
 
 ## Screenshots
 
