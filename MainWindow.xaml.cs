@@ -73,7 +73,7 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         #region Reading and injecting custom style
 
         // If user created a custom CSS file
-        if (File.Exists(CustomCSSPath))
+        if (File.Exists(CustomCSSPath) && !Environment.GetCommandLineArgs().Contains("--disable-css"))
         {
             // Read all content to inject later
             FinalCSS += File
