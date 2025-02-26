@@ -14,16 +14,8 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        string[] CmdlineArgs = Environment.GetCommandLineArgs();
-
-        if (CmdlineArgs.Contains("--pwa"))
-        {
-            new WebApp().Show();
-        }
-        else
-        {
-            new MainWindow().Show();
-        }
+        Window TargetWindow = Environment.GetCommandLineArgs().Contains("--pwa") ? new WebApp() : new MainWindow();
+        TargetWindow.Show();
     }
 }
 
