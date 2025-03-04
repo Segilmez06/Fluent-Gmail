@@ -51,16 +51,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="assets\**" />
+    <EmbeddedResource Remove="assets\**" />
+    <None Remove="assets\**" />
+    <Page Remove="assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="C:\Users\sarpe\.nuget\packages\lottiesharp\2.4.2\contentFiles\any\net8.0-windows7.0\lottie_sharp.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
     <None Remove="Integrations\fix-filter-box.css" />
     <None Remove="Integrations\fix-gaps.css" />
     <None Remove="Integrations\mica.css" />
     <None Remove="Integrations\native-controls.css" />
     <None Remove="Integrations\native-logo.css" />
     <None Remove="Integrations\smooth-reveal.css" />
+    <None Remove="LICENSE" />
     <None Remove="Resources\Gmail-Animated.json" />
     <None Remove="Resources\gmail.ico" />
     <None Remove="Style.css" />

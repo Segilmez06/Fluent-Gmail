@@ -4,77 +4,52 @@ Fluent Gmail is a wrapper written in WPF for Gmail that allows you to enhance yo
 Each feature in the project is called an integration. Integrations can fix styling and create or move functionality. Most of them are opt-out with a config file.
 
 ## Downloading
-Downloads are not yet available. Once it's released, you can go to Releases page or get latest Actions build.
+Get your latest build from [Releases](https://github.com/Segilmez06/Fluent-Gmail/releases/latest) page. Arm64 and x64 supported.
+
+For most users, Windows x64 Standalone would work fine. See the table below to chose which one to use:
+| Type       | Description |
+| :--------- | :---------- |
+| Standalone | All in one package. Contains it's own runtime.<br>Ready to use but bigger file size. |
+| Framework  | Requires [.Net Core 9.0.x](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) to be installed. Much less file size.<br>Prefer this if you already have .Net Core installed. |
+
+> [!IMPORTANT]
+> I won't release x86 builds for this project due to the smaller user base and the architecture being mostly outdated.
+> It can still be compiled from source if needed. If you are interested in an x86 builds, please create an issue.
 
 ## Installation
-Not released yet. Try to compile from source. You are on your own, good luck.
+No installation required. Just make sure to install dependencies if required ([see table above](#downloading)). Download and extract the archive, then run it.
 
 ## Screenshots
-Screenshots will the provided with first stable release. Hint: A native looking Gmail interface with Mica material in the back.
+
+#### Default config with no external CSS:
+
+<details>
+  <summary>Login page</summary>
+
+  ![Login page](assets/Login.png)
+
+</details>
+<details>
+  <summary>Inbox</summary>
+
+  ![Inbox page](assets/Inbox.png)
+
+</details>
+
+#### With some styling, you can get cleaner results like this:
+![Custom style](assets/Custom.png)
+
+With even more tweaking, you can transform this view to really native looking experience.
+
+## Command Line Arguments
+See [Wiki/Command Line Arguments](https://github.com/Segilmez06/Fluent-Gmail/wiki/Command-Line-Arguments) page.
 
 ## Custom Styles
-You can inject custom styles into your Gmail instance. Create a `Custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
-
-## Configuring
-Create a `config.ini` file inside installation location / working directory. Here is a template config file with all available options to start with:
-```ini
-# Moves account popup to top of the page
-# Default: true
-fix-account-popup=true
-
-# Aligns filter box with search box
-# Default: true
-fix-filter-box=true
-
-# Sets all internal (in-browser) gaps to 4
-# Default: true
-fix-gaps=true
-
-# Enables mica
-# Default: true
-mica=true
-
-# Enabled mica on login screen
-# Default: true
-mica-login=true
-
-# Moves header button to native title bar
-# Default: true
-native-controls=true
-
-# Shows Gmail branding logo on native title bar
-# Default: true
-native-logo=true
-
-# WIP - smoothly reveals window contents after loading finished
-# Default: true
-smooth-reveal=true
-
-# Mouse scrol on titlebar to maximize, normalize and minimize
-# Default: true
-wheel-window-state=true
-
-# Disable MS Edge context menu
-# Default: true
-disable-system-context=true
-
-# Enable F12 DevTools
-# Default: true
-devtools=true
-```
-
-## Roadmap
-- [x] Editable external CSS
-- [x] Make Mica integrations opt-outable (GUI or config file)
-- [x] Edit ReadMe
-- [ ] Add screenshots
-- [ ] Add CI/CD (Development workflow done)
-- [ ] Create packaging workflow
-- [ ] Implement smooth reveal
-- [ ] Release
-- [ ] Make external styles opt-out with config file
+You can inject custom styles into your Gmail instance. Create a `custom.css` inside installation location / working directory and put your stylesheet inside. It will automatically gets loaded on startup. Also, all styles gets elevated with `!important` tag to override default styles easily.
 
 ## Contributing and Support
+
+For more integration (built-in style and functionality) ideas, just create a feature request.
 
 Any PR and issue is really appreciated. You can show your support by ⭐ starring the repo.
 

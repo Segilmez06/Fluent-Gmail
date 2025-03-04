@@ -32,8 +32,8 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
     // Namespace that stores the integration stylesheets
     readonly string IntegrationNamespace = "Gmail.Integrations";
 
-    // Available integrations - BEWARE! Not all integrations use stylesheets!
-    readonly string[] AvailableIntegrations = [
+    // List of enabled integrations
+    List<string> Integrations = [
         "fix-account-popup",
         "fix-filter-box",
         "fix-gaps",
@@ -43,33 +43,19 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         "native-logo",
         "smooth-reveal",
         "wheel-window-state",
-        "disable-system-context",
-        "devtools"
+        "disable-system-context"
         ];
 
-    // List of enabled integrations
-    List<string> EnabledIntegrations = [];
-
     // Simple wrapper function to check if integration is enabled
-    bool IsIntegrationEnabled(string IntegrationName) => EnabledIntegrations.Contains(IntegrationName);
+    bool IsIntegrationEnabled(string IntegrationName) => Integrations.Contains(IntegrationName);
 
     #endregion
 
 
     #region File data
 
-    // Config file relative path from working directory
-    readonly string ConfigPath = "config.ini";
-
     // Custom CSS file relative path from working directory
-    readonly string CustomCSSPath = "Custom.css";
-
-
-    // Config file raw data
-    string Config = "";
-
-    // Custom CSS file raw data
-    string CustomCSS = "";
+    readonly string CustomCSSPath = "custom.css";
 
     #endregion
 
@@ -87,12 +73,12 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         #region Reading and injecting custom style
 
         // If user created a custom CSS file
-        if (File.Exists(CustomCSSPath))
+        if (File.Exists(CustomCSSPath) && !Environment.GetCommandLineArgs().Contains("--disable-css"))
         {
             // Read all content to inject later
-            CustomCSS = File.ReadAllText(CustomCSSPath);
-
-            FinalCSS += CustomCSS.Replace(";", " !important ;");
+            FinalCSS += File
+                        .ReadAllText(CustomCSSPath)
+                        .Replace(";", " !important ;");
         }
 
         #endregion
@@ -100,37 +86,11 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
 
         #region Reading config and fetching integrations
 
-        // Enable all integrations, some might be disabled with config
-        EnabledIntegrations.AddRange(AvailableIntegrations);
-
-        // If user created a config file
-        if (File.Exists(ConfigPath))
-        {
-            // Read all config to parse
-            Config = File.ReadAllText(ConfigPath);
-
-            // Iterate all lines
-            foreach (string Line in Config.Replace(' ', '\0').Split("\n"))
-            {
-                // Skip comments
-                if (!Line.Contains('=') || Line.StartsWith('#') || Line.StartsWith(';') || Line.Length < 2)
-                    continue;
-
-                // Key key-value pair
-                string[] Statements = Line.Trim().Split('=');
-                (string ConfigKey, string ConfigValue) = (Statements[0], Statements[1]);
-
-                // Disable integration
-                if (AvailableIntegrations.Contains(ConfigKey) && (ConfigValue.ToLower() == "false" || ConfigValue == "0"))
-                    EnabledIntegrations.Remove(ConfigKey);
-            }
-        }
-
         // Get active assembly to extract embedded resources
         Assembly CurrentAsm = Assembly.GetExecutingAssembly();
 
         // Iterate through enabled integrations
-        foreach (string Integration in EnabledIntegrations)
+        foreach (string Integration in Integrations)
         {
             // Get resource from assembly
             Stream? ResourceStream = CurrentAsm.GetManifestResourceStream($"{IntegrationNamespace}.{Integration}.css");
@@ -181,16 +141,15 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         #region Bind listeners
 
         // Initialize listener for F12 key
-        if (!IsIntegrationEnabled("devtools"))
-            WebView.CoreWebView2InitializationCompleted += AttachDevToolsManager;
+        if (!Environment.GetCommandLineArgs().Contains("--devtools"))
+            WebView.CoreWebView2InitializationCompleted += DisableDevTools;
 
 
         // Listen for profile image
-        WebView.NavigationCompleted += WebView_NavigationCompleted;
+        WebView.NavigationCompleted += PageLoadCompleted;
 
         // Check if showing native controls needed
-        if (IsIntegrationEnabled("native-controls"))
-            WebView.NavigationStarting += CheckForButtonState;
+        WebView.NavigationStarting += CheckForButtonState;
 
         // Inject CSS
         WebView.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
@@ -199,12 +158,10 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         WebView.CoreWebView2InitializationCompleted += AttachSyncLoops;
 
         // Attach button checkers on URL change
-        if (IsIntegrationEnabled("native-controls"))
-            WebView.CoreWebView2InitializationCompleted += AttachHeaderButtonChecks;
+        WebView.CoreWebView2InitializationCompleted += AttachHeaderButtonChecks;
 
         // Disable MS-Edge default context menu
-        if (IsIntegrationEnabled("disable-system-context"))
-            WebView.CoreWebView2InitializationCompleted += AttachContextMenuDisable; ;
+        WebView.CoreWebView2InitializationCompleted += AttachContextMenuDisable; ;
 
         // Listen for drag and double-click to maximize
         DraggableElement.MouseLeftButtonDown += DraggableElement_MouseLeftButtonDown;
@@ -213,8 +170,7 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
         DraggableElement.MouseMove += DraggableElement_MouseMove;
 
         // Listen for maximize-normalize-minimize with mouse scroll wheel
-        if(IsIntegrationEnabled("wheel-window-state"))
-            DraggableElement.MouseWheel += DraggableElement_MouseWheel;
+        DraggableElement.MouseWheel += DraggableElement_MouseWheel;
 
 
         // Check for left panel state
@@ -252,26 +208,25 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
 
 
             // Get image as stream
-            using (Stream? ImageStream = CurrentAsm.GetManifestResourceStream("Gmail.Resources.gmail.png"))
+            using Stream? ImageStream = CurrentAsm.GetManifestResourceStream("Gmail.Resources.gmail.png");
+
+            // If image is available
+            if (ImageStream != null)
             {
-                // If image is available
-                if (ImageStream != null)
-                {
-                    // Create new Bitmap
-                    BitmapImage Image = new();
+                // Create new Bitmap
+                BitmapImage Image = new();
 
-                    // Read data from stream
-                    Image.BeginInit();
-                    Image.StreamSource = ImageStream;
-                    Image.CacheOption = BitmapCacheOption.OnLoad;
+                // Read data from stream
+                Image.BeginInit();
+                Image.StreamSource = ImageStream;
+                Image.CacheOption = BitmapCacheOption.OnLoad;
 
-                    // End reading
-                    Image.EndInit();
-                    Image.Freeze();
+                // End reading
+                Image.EndInit();
+                Image.Freeze();
 
-                    // Set source to image
-                    HeaderIcon.Source = Image;
-                }
+                // Set source to image
+                HeaderIcon.Source = Image;
             }
         }
 
@@ -281,7 +236,7 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
 
     #region F12 DevTools
 
-    private void AttachDevToolsManager(object? sender, CoreWebView2InitializationCompletedEventArgs e)
+    private void DisableDevTools(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
         // Disable DevTools
         WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
@@ -490,7 +445,7 @@ public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
     #region Page Initialized
     
     // When page loading completed - GMail is ready to use
-    private async void WebView_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
+    private async void PageLoadCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         // Hide loading animation
         LoadingAnimation.Visibility = Visibility.Hidden;

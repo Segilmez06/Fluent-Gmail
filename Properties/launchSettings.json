@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "PWA Mode": {
+      "commandName": "Project",
+      "commandLineArgs": "--pwa"
+    },
+    "Default": {
+      "commandName": "Project"
+    },
+    "Enable DevTools": {
+      "commandName": "Project",
+      "commandLineArgs": "--devtools"
+    }
+  }
+}
